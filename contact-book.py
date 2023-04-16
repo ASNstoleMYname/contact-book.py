@@ -19,19 +19,31 @@ def ascii_start():
     
 ascii_start()
 
-# connecting to sqlite data base
-connected = sqlite3.connect('./test.db')
 
-# initizliazing cursor, needed to fetch date form .db
-cursor = connected.cursor()
+connected = sqlite3.connect('./contacts.db') # connecting to sqlite data base
+cur = connected.cursor() # initizliazing cursor, needed to fetch date form .db
 
 #sql commands
 persoon = ()
 
-# inserting data
-cursor.execute("INSERT INTO contacts (contact_id,first_name,last_name,email,phone) VALUES (2,'Jarne','Guy','Jarne.Guy@gmail.com',666666)")
 
-connected.commit()
-#clossing the connection to data base
-connected.close()
+# try for error catching
+try:
+    cur.execute("SELECT * FROM contacts")
+
+
+# error catching
+except sqlite3.Error as e:
+    print("Error!:", e)
+
+# clossing connection
+finally:
+    if (connected):
+        connected.close()
+        print("=== \\\===============|closed|===============// ===")
+
+
+# connected.commit()
+# #clossing the connection to data base
+# connected.close()
 
