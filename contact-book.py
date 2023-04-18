@@ -35,12 +35,17 @@ cur = connected.cursor() # initizliazing cursor, needed to fetch date form .db
 def print_all():
     cur.execute("SELECT * FROM people")
     rows = cur.fetchall()
-    print(">----------------------------------------------------------<")
+    print(">-|people|--------------------------------------------------------<")
     for x in rows:
         # print(nf.icons['nf-cod-archive'])
         print(">-" +" | ".join(x))
-        print(">----------------------------------------------------------<")
-
+        # print(">----------------------------------------------------------<")
+    cur.execute("SELECT * FROM companies")
+    rows = cur.fetchall()
+    print(">-|companies|-----------------------------------------------------<")
+    for x in rows:
+        print(">-" + " | ".join(x))
+        # print(">----------------------------------------------------------<")
 def close_connection():
     # clossing connection
     if (connected):
