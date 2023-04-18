@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 
 #===================================================================#
 #                   _               _      | |               | |    #
@@ -9,13 +11,15 @@
 
 import sys
 import sqlite3 
+import nerdfonts as nf
+
 
 def ascii_start():
-    print("                        __              __        ")
-    print(".----.-----.-----.----|  |_.---.-.----|  |_.-----.")
-    print("|  __|  _  |     |  __|   _|  _  |  __|   _|__ --|")
-    print("|____|_____|__|__|____|____|___._|____|____|_____|")
-    print("=== <>--------------------------------------<> ===")
+    print("                       |--|            |--|")
+    print(" .----.-----.-----.----|  |_.---.-.----|  |_.-----.")
+    print(" |  __|  _  |     |  __|   _|  _  |  __|   _|__ --|")
+    print(" |____|_____|__|__|____|____|___._|____|____|_____|")
+    print("||=== <>--------------------------------------<> ===")
     
 ascii_start()
 
@@ -23,24 +27,46 @@ ascii_start()
 connected = sqlite3.connect('./contacts.db') # connecting to sqlite data base
 cur = connected.cursor() # initizliazing cursor, needed to fetch date form .db
 
-#sql commands
-persoon = ()
+#variables
 
 
-# try for error catching
-try:
-    cur.execute("SELECT * FROM contacts")
 
+# funcitons
+def print_all():
+    cur.execute("SELECT * FROM people")
+    rows = cur.fetchall()
+    print(">----------------------------------------------------------<")
+    for x in rows:
+        # print(nf.icons['nf-cod-archive'])
+        print(">-" +" | ".join(x))
+        print(">----------------------------------------------------------<")
 
-# error catching
-except sqlite3.Error as e:
-    print("Error!:", e)
-
-# clossing connection
-finally:
+def close_connection():
+    # clossing connection
     if (connected):
         connected.close()
         print("=== \\\===============|closed|===============// ===")
+        sys.exit()
+        
+
+
+# try for error catching
+
+while True:
+    try:
+        usr_input = input("||>")
+        match usr_input:
+            case "close":
+                close_connection()
+            case "see all":
+                print_all ()
+
+
+    # error catching
+    except sqlite3.Error as e:
+        print("Error!:", e)
+
+
 
 
 # connected.commit()
