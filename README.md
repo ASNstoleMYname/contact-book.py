@@ -29,6 +29,11 @@ To run ``cd ~/`` into contact-book and execute the ```contact.py```.
 ```sh
 ./contact-book.py
 ```
+Incase you one add a command for this program you can simply add the following to your **``.bashrc``** or what ever you use.
+
+```sh
+alias contact-book="~/[PATH]/contact-book/contact-book.sh"
+```
 ## Usage
 ------------------
 Type ``help``, to list all commands.
@@ -40,4 +45,5 @@ Type ``help``, to list all commands.
     * remove
     * close
     * help
+
 
