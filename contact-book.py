@@ -38,23 +38,25 @@ def help():
     print(" *   see all => see all entries")
     print(" *   search => search buy name(SQL key)")
     print(" *   add => add new entrie")
-
+    print(" *   remove => remove item from list")
 
 def add_contact():
     contact_type = input("(P)erson or (C)ompanie:")
 
-    match contact_type:
-        case "p":
+    match contact_type.capitalize():
+        case "P":
             contact_naam = input("name:")
             contact_a_naam = input("last name:")
             contact_nummer = input("nummer:")
             contact_email = input("email:")
+            print(" * added " + contact_naam + '\n')
             cur.execute("""INSERT INTO people (naam,a_naam,nummer,email) VALUES (?,?,?,?)""", [contact_naam,contact_a_naam,contact_nummer,contact_email]) 
-        case "c":
+        case "C":
             contact_naam = input("name:")
             contact_nummer = input("nummer:")
             contact_email = input("email:")
             contact_addres = input("straat:")
+            print(" * added " + contact_naam +'\n')
             cur.execute("""INSERT INTO companies (naam,nummer,email,addres) VALUES (?,?,?,?)""", [contact_naam,contact_email,contact_nummer,contact_addres])
 
 
@@ -62,30 +64,43 @@ def print_all(): #prints all contacts
     #----people 
     cur.execute("SELECT * FROM people")
     rows = cur.fetchall() #puts cursor elements in a tuplet
-    print(">-|people|--------------------------------------------------------<")
+    print(">-|people|--------------------------------------------------------<" + '\n')
     for x in rows:
         # print(nf.icons['nf-cod-archive'])
-        print(">-" +" | ".join(x)) #print the tuplet in a nicer way
+        print("[*]  " +" | ".join(x)) #print the tuplet in a nicer way
         # print(">----------------------------------------------------------<")
     
     #----companies
     cur.execute("SELECT * FROM companies")
     rows = cur.fetchall()
-    print(">-|companies|-----------------------------------------------------<")
+    print(">-|companies|-----------------------------------------------------<" + '\n')
     for x in rows:
-        print(">-" + " | ".join(x))
+        print("[*]" + " | ".join(x))
         # print(">----------------------------------------------------------<")
 
 
-def search_all():
-    table_select=input("witch table? (P)eople (C)ompanies: ")
-    name_search = input("name?:")
-    match table_select:
-        case "p":
-            cur.execute("""Select * From people Where naam like ?""", [name_search] ) 
+def search_all(table, item):
+    match table.capitalize():
+        case "p": 
+            rows = cur.execute("""Select * From people Where naam like ?""", [item] )
+            for x in rows:
+                print("[x]" + " | ".join(x) + '\n')
 
         case "c":
-            cur.execute("""SELECT * FROM companies WHERE naam LIKE ?""", [name_search])
+            rows = cur.execute("""SELECT * FROM companies WHERE naam LIKE ?""", [item])
+            for x in rows:
+                print("[x]" + " | ".join(x) + '\n')
+
+
+
+def delete_item(table, item):
+    match table.capitalize():
+        case "P":
+            cur.execute("""DELETE FROM people WHERE naam = (?)""", [item])
+        case "C":
+            cur.execute("""DELETE FROM companies WHERE naam = (?)""", [item])
+     # cur.execute("""DELETE FROM ? where naam = ?""", [table, item])
+    
 
 
 def close_connection():
@@ -104,17 +119,31 @@ while True:
         match usr_input:
             case "close": #close program
                 close_connection()
+
             case "see all": # see all entries
                 print_all ()
+
             case "search": # search for specifiek entrie
-                search_all()
+                s_table = input("(P)erson or (C)ompanie:")
+                s_item = input("name:")
+                search_all(s_table, s_item)
                 result = cur.fetchall()
-                print(result)
+                print(result, '\n')
+
             case "add": # add an entrie
                 add_contact()
                 connected.commit()
+
+            case "delete":
+                del_table = input("(P)erson or (C)ompanie:")
+                del_name = input("name:")
+                delete_item(del_table, del_name)
+                connected.commit()
+                print("Deleted =>", del_name, '\n')
+
             case "help":
                 help()
+
     # error catching
     except sqlite3.Error as e:
         print("Error!:", e)
