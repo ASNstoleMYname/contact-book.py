@@ -5,7 +5,7 @@
 This is a py script to manage contacts in a sqlite3 database
 
 ## requiremnts
--------------------
+
    * python
    * pip 
    * sqlite3
@@ -13,7 +13,7 @@ This is a py script to manage contacts in a sqlite3 database
 >**_Note!_**: i also recomend using Fira Code font with this script
 
 ## how to use
-----------------
+
 **clone** the repo into a folder
 ```sh
 git clone https://github.com/ASNstoleMYname/contact-book.py.git
@@ -35,7 +35,7 @@ Incase you one add a command for this program you can simply add the following t
 alias contact-book="~/[PATH]/contact-book/contact-book.sh"
 ```
 ## Usage
-------------------
+
 Type ``help``, to list all commands.
 
 ### ALL COMMANDS
