@@ -8,6 +8,7 @@
 # ( (__| |_| | | | | |_( ( | ( (___| |__   | |_) | |_| | |_| | |< ( #
 #  \____\___/|_| |_|\___\_||_|\____)\___)  |____/ \___/ \___/|_| \_)#
 #===================================================================#
+#https://github.com/ASNstoleMYname
 
 import sys
 import sqlite3 
@@ -38,7 +39,7 @@ def help():
     print(" *   see all => see all entries")
     print(" *   search => search buy name(SQL key)")
     print(" *   add => add new entrie")
-    print(" *   remove => remove item from list")
+    print(" *   delete => remove item from list")
 
 def add_contact():
     contact_type = input("(P)erson or (C)ompanie:")
