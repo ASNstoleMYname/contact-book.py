@@ -40,6 +40,7 @@ def help():
     print(" *   search => search buy name(SQL key)")
     print(" *   add => add new entrie")
     print(" *   delete => remove item from list")
+    print(" *   close => exit the app\n")
 
 def add_contact():
     contact_type = input("(P)erson or (C)ompanie:")
@@ -144,7 +145,8 @@ while True:
 
             case "help":
                 help()
-
+            case _:
+                print("ERROR 🚫: Command",usr_input,"typed wrong or doesnt exist -> help for commands")
     # error catching
     except sqlite3.Error as e:
         print("Error!:", e)
@@ -155,4 +157,3 @@ while True:
 # connected.commit()
 # #clossing the connection to data base
 # connected.close()
-
